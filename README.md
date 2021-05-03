@@ -1,2 +1,2 @@
-# Bridge_card
+# CONTRACT BRIDGE PLAYING
 Bridge card game project
