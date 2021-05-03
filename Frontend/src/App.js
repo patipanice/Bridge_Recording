@@ -7,7 +7,7 @@ import AboutMe from './component/AboutMe'
 import Navbar from './component/Navbar'
 
 
-function App1() {
+function App() {
 
   return (
     <Router>
@@ -32,4 +32,4 @@ function App1() {
   );
 }
 
-export default App1;
+export default App;
