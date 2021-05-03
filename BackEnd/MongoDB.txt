@@ -1,8 +1,0 @@
-Playing -
-{"_id":1,"game_matchs":"1","game_rounds":"1","recordings":[["Back","Back","Back","Back","Back"],["H07","H06","H05","H08","H08"],["H02","H05","H04","H03","H05"],["H06","H01","H05","H12","H12"],["H03","H11","H05","H04","H11"]],"first_play":"West","trump":"H"}
-
-Recordings -
-{"_id":1,"trump":"H","game_matchs":"1","game_rounds":"5","recording":{"South":{"inHand":[],"inventory":[]},"East":{"inHand":["H08","H12"],"inventory":[["H07","H06","H05","H08","H08"],["H06","H01","H05","H12","H12"]]},"North":{"inHand":[],"inventory":[]},"West":{"inHand":["H05","H11"],"inventory":[["H02","H05","H04","H03","H05"],["H03","H11","H05","H04","H11"]]}},"first_play":"West"}
-
-Trump - 
-{"_id":0,"trump":"0"}
