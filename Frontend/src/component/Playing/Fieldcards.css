@@ -1,0 +1,105 @@
+
+.GameState {
+  font-size: 20px;
+  color: red;
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+.card {
+  width: 90px;
+  position: absolute;
+}
+
+.south-card { 
+  top: 430px;
+  left: 620px;
+}
+
+.west-card {
+  top: 250px;
+  left: 410px;
+}
+
+.north-card {  
+  top: 55px;
+  left: 620px;
+}
+
+.east-card {
+  top: 250px;
+  left: 830px;
+}
+
+.winround-card {
+  width: 100px;
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+}
+
+.title_player {
+  margin-top: -10px;
+  color: red;
+}
+
+label {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.btn-trump{
+  width: 80px;
+  height: 60px;
+  font-size: 18px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -35px;
+  margin-left: -52px;
+  border-radius: 5px;
+  border-color: rgb(255, 255, 255);
+}
+
+.trump_state{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -35px;
+  margin-left: -50px;
+  font-size: 40px;
+}
+
+.direction{
+  position: absolute;
+  color:rgb(202, 202, 202);
+}
+.south-direction{
+  top: 400px;
+  left: 645px;
+}
+
+.east-direction{
+  top: 220px;
+  left: 860px;
+}
+
+.north-direction{
+  top: 25px;
+  left: 645px;
+}
+
+.west-direction{
+  top: 220px;
+  left: 435px;
+}
+
+.win-direction{
+  position: absolute;
+  top: 420px;
+  left: 1230px;
+}
+
+.trump-img{
+  width: 3%;
+}

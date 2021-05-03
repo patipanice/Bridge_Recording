@@ -1,0 +1,70 @@
+.content-trump {
+  text-align: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.753);
+}
+
+.content-trump-popup-bg {
+  position: absolute;
+  top: center;
+  bottom: center;
+  left: center;
+  right: center;
+}
+
+.content-trump-popup-use {
+  position: relative;
+  max-width: 800px;
+  background-color: rgba(243, 243, 243, 0.89);
+  width: 500px;
+  height: 400px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.content-trump-popup-use img {
+  width: 15px;
+  height: 15px;
+  margin-left: 10px;
+}
+
+.headder-trump{
+  font-size: 28px;
+}
+
+.first_play{
+  margin-top:15px;
+}
+
+.first_play label {
+  font-size: 18px;
+}
+
+.first_play input {
+  margin-left: 15px;
+  margin-right: 5px;
+}
+
+.select_trump{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+button {
+  font-size: 16px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+button:hover {
+  background-color: brown;
+  color:wheat;
+}

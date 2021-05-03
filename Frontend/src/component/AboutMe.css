@@ -1,0 +1,25 @@
+.flexbox{
+    margin-top: 170px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pic-profile{
+    width: 40%;
+    border-radius: 10px;
+}
+
+p {
+    color: rgb(49, 49, 49);
+    font-family:cursive;
+}
+
+.name{
+    margin-top: 20px;
+}
