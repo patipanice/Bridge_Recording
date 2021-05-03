@@ -1,0 +1,25 @@
+[
+  {
+    "_id": 1,
+    "game_matchs": 1,
+    "game_rounds": 1,
+    "first_play": "South",
+    "trump": "0",
+    "recording": [
+      ["Back", "Back", "Back", "Back", "000_Empty"],
+      ["Back", "Back", "Back", "Back", "000_Empty"],
+      ["Back", "Back", "Back", "Back", "000_Empty"],
+      ["Back", "Back", "Back", "Back", "000_Empty"],
+      ["Back", "Back", "Back", "Back", "000_Empty"],
+      ["Back", "Back", "Back", "Back", "000_Empty"],
+      ["Back", "Back", "Back", "Back", "000_Empty"],
+      ["Back", "Back", "Back", "Back", "000_Empty"],
+      ["Back", "Back", "Back", "Back", "000_Empty"],
+      ["Back", "Back", "Back", "Back", "000_Empty"],
+      ["Back", "Back", "Back", "Back", "000_Empty"],
+      ["Back", "Back", "Back", "Back", "000_Empty"],
+      ["Back", "Back", "Back", "Back", "000_Empty"],
+      ["Back", "Back", "Back", "Back", "000_Empty"]
+    ]
+  }
+]

@@ -1,0 +1,139 @@
+[
+  {
+    "_id": 1,
+    "trump": "0",
+    "game_matchs": 1,
+    "game_rounds": 1,
+    "recording": {
+      "South": {
+        "inHand": [
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back"
+        ],
+        "inventory": [
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"]
+        ]
+      },
+      "East": {
+        "inHand": [
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back"
+        ],
+        "inventory": [
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"]
+        ]
+      },
+      "North": {
+        "inHand": [
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back"
+        ],
+        "inventory": [
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"]
+        ]
+      },
+      "West": {
+        "inHand": [
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back",
+          "Back"
+        ],
+        "inventory": [
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"],
+          ["Back", "Back", "Back", "Back", "Back"]
+        ]
+      }
+    },
+    "first_play": "South"
+  }
+]
