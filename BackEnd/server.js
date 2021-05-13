@@ -1,279 +1,161 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const Promise = require('promise');
-const cors = require('cors');
-const mongojs = require('mongojs')
-const mydb = mongojs('ContractBridgeDB');
-const app = express();
-var port = 4000;
-
-var data;
-var arrData = []; //Keep card data.
-var newarrData = [];
-var game_match, game_round, trump, first_play, Win, Max, directionPlayer, indexWin;
-var trumpS, first_playS;
-
+var express = require("express");
+var MongoClient = require('mongodb').MongoClient;
+var saveCards = require("./saveDataToMango");
+var cors = require("cors");
+const bodyParser = require("body-parser");
+const editarrData = require('./editarrData');
+const resultRound = require('./resultRound');
+const Promise = require('promise')
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/ContractBridgeDB";
+ 
+var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+var port = process.env.PORT || 5000;
 
-app.listen(port, function () {
-  var nodeStartTime = new Date();
-  console.log('My protocol running on port ' + port + ' start at ' + nodeStartTime);
-  getRoundMatchMongo();
+var arrData = [] //recive 4 cards form arduino 
+
+var gameStatus = {
+    game_match: 1,
+    game_round: 1,
+    trump: "None",
+    first_direction: "South"
+}
+
+app.listen(port, () => {
+    console.log("[success] : listening on port " + port);
+    function connectMongoDB() {
+        return new Promise(function (fulfill, reject) {
+            MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
+                if (err) reject(err);
+                else {
+                    console.log("Database connected")
+                    var dbo = db.db("ContractBridgeDB");
+                    dbo.collection("status").findOne({}, (err, result) => {
+                        if (err) reject(err);
+                        else {
+                            fulfill(result);
+                        }
+                    });
+                }
+            });
+        });
+    }
+    connectMongoDB().then(res => {
+        gameStatus = {
+            game_match: res.game_match,
+            game_round: res.game_round,
+            trump: res.trump,
+            first_direction: res.first_direction
+        }
+        //when game_round = 13 -> game_match =+ 1 
+        if(gameStatus.game_round === 13) {
+            let myqueryStatus = { '_id': gameStatus.game_match };
+            let newvaluesStatus = { $set: { 'game_match': gameStatus.game_match + 1} };
+            dbo.collection("status").updateOne( myqueryStatus, newvaluesStatus, (err) => {
+                if (err) throw err;
+                console.log("Update game_match completed");
+                db.close();
+            });
+        }
+    });
 });
-
-//Get Round and Match to update game round
-const getRoundMatchMongo = async () => {
-  var mywritecollection = await mydb.collection('Recording');
-  mywritecollection.find({}).sort({ _id: -1 }).limit(1, function (err, result) {
-    if (err) {
-      console.log(err);
+//test
+app.get("/", (req, res) => {
+    res.status(200).send("หน้าแรกของ api express");
+});
+//get data form arduino get
+app.get('/write/:data', (req, res) => {
+    data = req.params.data;
+    console.log("No. " + (arrData.length + 1) + " : " + data);
+    if (gameStatus.trump === "None") {
+        console.log("You must to auction before go to playing state.");
+        return res.send("You placing " + data + " !! You must to auction before go to playing state !!");
     } else {
-      arrData = []; //re-state 
-      [game_round, game_match, trump, first_play] = [result[0].game_rounds, result[0].game_matchs, result[0].trump, result[0].first_play];
-      console.log("Game-round : " + game_round + " Game-match : " + game_match + " Trump : " + trump + " first_play : " + first_play); //print Game Round & Game Match & Trump
+        res.send("You placing " + data);
+        arrData.push(data);
+        if (arrData.length == 4) {
+            console.log("arrData = " + arrData);
+            arrData = editarrData(arrData, gameStatus.first_direction);
+            let [winRound, first_direciton] = resultRound(arrData);
+            console.log("WinRound : " + winRound + " First_Direction : " + first_direciton);
+            saveCards.saveCards(arrData, winRound, first_direciton, gameStatus);
+        }
     }
-  });
+});
+//post status form front
+app.post('/poststatus', (req,res) => {
+   let trump = req.body.trump;
+   let first_direction = req.body.first_direction;
+   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
+    if (err) throw(err);
+    else {
+        console.log("Database connected")
+        var dbo = db.db("ContractBridgeDB");
+        let mySQL = {_id : gameStatus.game_match};
+        let newSQL = {$set :{'trump' : trump , 'first_direction' : first_direction}};
+        dbo.collection("status").updateOne(mySQL,newSQL, (err) => {
+            if (err) throw(err);
+            console.log("Update postStatus completed");
+            res.send("Update postStatus completed");
+        });
+    }
+});
+});
+//get card 
+app.get('/card', (req,res) => {
+    readCard(res);
+});
+//get status
+app.get('/status', (req,res) => {
+    readStatus(res);
+});
+
+/** Function read data  */
+
+async function readCard (res){
+    await readCardMongo(res);
 }
 
-
-app.get('/', function (req, res) {
-  res.send("Hello Server!");
-});
-
-app.get('/cards', function (req, res) {
-  readdata(50, res);
-});
-
-app.get('/trumps', function (req, res) {
-  readtrumps(10, res);
-});
-
-app.get('/result', function (req, res) {
-  readresult(20, res);
-});
-
-app.post('/post', function (req, res) {
-  trumpS = req.body.trump;
-  first_playS = req.body.first_play;
-  console.log(trumpS);
-  console.log(first_playS);
-  writeTrump(trumpS, first_playS, res);
-});
-
-//Get data from Arduino
-app.get('/write/:data', function (req, res) {
-  data = req.params.data;
-  console.log(data);
-  if (trump == 0) {
-    console.log("Auction before going to playing state");
-    return res.send("You placing " + data + " !! Auction before going to playing state !!");
-  } else {
-    arrData.push(data);
-    res.send("You placing " + data);
-    if (arrData.length == 4) {
-      console.log("Data = " + arrData + ", Length = " + arrData.length);
-      editArrData();
-      resultRound();
-    }
-  }
-});
-
-const editArrData = () => {
-  if (first_play == "South") {
-    console.log("editArrData = South"); // South
-    newarrData[0] = arrData[0];
-    newarrData[1] = arrData[1];
-    newarrData[2] = arrData[2];
-    newarrData[3] = arrData[3];
-  }
-  else if (first_play == "West") { // West
-    console.log("editArrData = West");
-    newarrData[0] = arrData[1];
-    newarrData[1] = arrData[2];
-    newarrData[2] = arrData[3];
-    newarrData[3] = arrData[0];
-  } else if (first_play == "North") { // North
-    console.log("editArrData = North");
-    newarrData[0] = arrData[2];
-    newarrData[1] = arrData[3];
-    newarrData[2] = arrData[0];
-    newarrData[3] = arrData[1];
-  } else if (first_play == "East") { // East
-    console.log("editArrData = East");
-    newarrData[0] = arrData[3];
-    newarrData[1] = arrData[0];
-    newarrData[2] = arrData[1];
-    newarrData[3] = arrData[2];
-  }
-  arrData = newarrData;
-  console.log("editArrData : " + arrData);
-}
-
-const saveGameStateToMongo = async () => {
-  var myquery = { 'game_rounds': game_round };
-  var mywritecollection = await mydb.collection('Playing');
-  var recordingcollection = await mydb.collection('Recording');
-  var newvalues = { $set: { [`recording.${game_round}`]: [...arrData, Win + "_" + directionPlayer] } }
-  await mywritecollection.update(myquery, newvalues, function (err) {
-    if (err) { console.log(err); } else { console.log('Push Playing Recording Passed'); }
-  });
-
-  var setValues = {
-    $set: {
-      [`recording.${directionPlayer}.inHand.${game_round}`]: [Win],
-      [`recording.${directionPlayer}.inventory.${game_round}`]: [...arrData]
-    }
-  }
-  await recordingcollection.update(myquery, setValues, function (err) {
-    if (err) { console.log(err); } else { console.log('Push Recording Recording Passed'); }
-  });
-
-  await mywritecollection.updateOne(myquery, { $set: { 'game_rounds': game_round + 1, 'first_play': directionPlayer } }, function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Set Round and firstPlay Playing pass")
-    }
-  });
-
-  await recordingcollection.updateOne(myquery, { $set: { 'game_rounds': game_round + 1, 'first_play': directionPlayer } }, function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Set Round and firstPlay Recording pass");
-      getRoundMatchMongo();
-    }
-  });
-}
-
-async function writeTrump(_trump, _firstplay, res) {
-  await writeTrumpToMongo(_trump, _firstplay, res);
-}
-
-function writeTrumpToMongo(_trump, _firstplay, res) {
-  return new Promise(function (resolve, reject) {
-    var myPlayingcollection = mydb.collection('Playing');
-    var myRecordingcollection = mydb.collection('Recording');
-    const mySQL = { "_id": game_match };
-    const setValues = {
-      $set: {
-        'trump': _trump,
-        'first_play': _firstplay
-      }
-    }
-    myPlayingcollection.update(mySQL, setValues, function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Record trump to Playing ok');
-      }
+const readCardMongo = (res) => {
+    return new Promise((resolve,reject)=> {
+        MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
+        if (err) throw(err);
+        else {
+            console.log("Database connected")
+            var dbo = db.db("ContractBridgeDB");
+            dbo.collection("card").find({}).toArray((err,docs) => {
+                if (err) throw(err);
+                res.json(docs)
+                console.log("Read card form mongo");
+                db.close();
+            });
+            
+        }
     });
-    myRecordingcollection.update(mySQL, setValues, function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Record trump to Recording ok');
-      }
     });
-  });
 }
 
-async function readdata(_datasize, res) {
-  await readDataFromMongo(_datasize, res);
+async function readStatus (res){
+    await readStatusMongo(res);
 }
 
-function readDataFromMongo(_readdatasize, res) {
-  return new Promise(function (resolve, reject) {
-    var myreadcollection = mydb.collection('Playing');
-    myreadcollection.find({}).limit(Number(_readdatasize)).sort({ recordTime: -1 }, function (err, docs) {
-      res.jsonp(docs.reverse());
+const readStatusMongo = (res) => {
+    return new Promise((resolve,reject)=> {
+        MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
+        if (err) throw(err);
+        else {
+            console.log("Database connected")
+            var dbo = db.db("ContractBridgeDB");
+            dbo.collection("status").find({}).toArray((err,docs) => {
+                if (err) throw(err);
+                res.json(docs)
+                console.log("Read status form mongo");
+                db.close();
+            });
+        }
     });
-  });
-}
-
-async function readtrumps(_datasize, res) {
-  await readTrumpsFromMongo(_datasize, res);
-}
-
-function readTrumpsFromMongo(_readdatasize, res) {
-  return new Promise(function (resolve, reject) {
-    var myreadcollection = mydb.collection('Trump');
-    myreadcollection.find({}).limit(Number(_readdatasize)).sort({ recordTime: -1 }, function (err, docs) {
-      res.jsonp(docs.reverse());
     });
-  });
 }
-
-async function readresult(_datasize, res) {
-  await readResultFromMongo(_datasize, res);
-}
-
-function readResultFromMongo(_readdatasize, res) {
-  return new Promise(function (resolve, reject) {
-    var myreadcollection = mydb.collection('Recording');
-    myreadcollection.find({}).limit(Number(_readdatasize)).sort({ recordTime: -1 }, function (err, docs) {
-      res.jsonp(docs.reverse());
-    });
-  });
-}
-
-//********************************************* คำนวนไพ่ และ ชนะรอบ ************************************//
-function resultRound() {
-  console.log("Resulting round state........ ");
-  var first = arrData[0].charAt(0);
-  //กรณีหน้าเดียวกันทั้งหมด parseInt => str>int , substring(from,to);
-  if (first == arrData[1].charAt(0) && first == arrData[2].charAt(0) && first == arrData[3].charAt(0)) {
-    //หาค่าที่มากสุด
-    const arrNum = arrData.map(data => parseInt(data.substring(1, 3)));
-    Max = Math.max(...arrNum);
-    Win = arrData.filter(arr => arr.substring(1, 3) == Max).toString();
-    indexWin = arrData.indexOf(Win); //หาว่าอยู่ตัวที่เท่าไหร่ใน arrData 
-  } else { //กรณีไม่ใช่หน้าเดียวกัน ให้คิดจากทรัมป์ 
-    [Win, indexWin] = find_Max(); //destructure return 2 value form function
-  }
-  changeDirection(indexWin);
-  console.log("Win_round : " + Win + ", At Index : " + indexWin);
-  saveGameStateToMongo();
-}
-
-
-
-//ฟังก์ชั่นหาค่ามากสุดกรณีมีทรัมป์ ทุกรูปแบบ
-const find_Max = () => {
-  const _find = arrData.filter(arr => arr.charAt(0) == trump);
-  if (_find.length == 1) {
-    Win = _find.toString();
-    indexWin = arrData.indexOf(Win);
-  } else {
-    console.log("if length > 1");
-    const arrNum = _find.map(data => parseInt(data.substring(1, 3)));
-    Max = Math.max(...arrNum);
-    Win = arrData.filter(arr => arr.substring(1, 3) == Max).toString();
-    indexWin = arrData.indexOf(Win);
-  }
-  return [Win, indexWin];
-}
-
-
-//********************************* ฟังกชั่นเปลี่ยนค่า win_index -> ทิศผู้เล่นที่เริ่มก่อน *******************************//
-const changeDirection = (num) => {
-  if (num == 0) {
-    directionPlayer = "South";
-    console.log(directionPlayer);
-  }
-  else if (num == 1) {
-    directionPlayer = "West";
-    console.log(directionPlayer);
-  }
-  else if (num == 2) {
-    directionPlayer = "North";
-    console.log(directionPlayer);
-  }
-  else if (num == 3) {
-    directionPlayer = "East";
-    console.log(directionPlayer);
-  }
-}
-
