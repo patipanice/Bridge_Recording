@@ -1,0 +1,9 @@
+[{
+  "_id": {
+    "$oid": "60992879ec989fe7b5f17b86"
+  },
+  "game_match": 1,
+  "trump": "H1",
+  "game_round": 1,
+  "first_direction": "South"
+}]
