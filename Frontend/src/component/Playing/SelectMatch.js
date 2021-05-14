@@ -1,15 +1,15 @@
 import React from 'react'
 import './SelectRound.css'
-export default function SelectRound(props) {
+export default function SelectMatch(props) {
 
-    const changeRound = (event) =>{
-        props.onChangeRound(event.target.value);
+    const changeMatch = (event) =>{
+        props.onChangeMatch(event.target.value);
     }
 
     return (
               <form >
-                <label>Select Round : </label>
-                <select name="rounds" id="rounds" onChange={changeRound} className="option-rounds">
+                <label>Select Match : </label>
+                <select name="match" id="match" onChange={changeMatch} className="option-matches">
                     <option value="0">Begin</option>
                     <option value="1">1</option>
                     <option value="2">2</option>

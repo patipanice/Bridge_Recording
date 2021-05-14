@@ -9,12 +9,11 @@ export default function Trump(props) {
   });
 
   const onSubmit = e => {
-    e.preventDefault();
     if (input['Trump'].length === 0 || input['winTrump'].length === 0) {
       alert("Plese select all option below to play the game !!");
     } else {
-      axios.post('http://localhost:4000/post', {
-        trump: input['Trump'], first_play: input['winTrump']
+      axios.post('http://localhost:5000/poststatus', {
+        trump: input['Trump'], first_direction: input['winTrump']
       }).then((res) => {
         console.log(res.status);
         if (res.status == "200") {
