@@ -1,5 +1,5 @@
 # CONTRACT BRIDGE PLAYING
 Bridge card game project
-developed by javascript 
+developed by javascript language
 
 
