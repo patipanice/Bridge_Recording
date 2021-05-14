@@ -5,35 +5,23 @@ import SelectRound from './SelectRound'
 
 export default function Playing() {
 
-  const [cardsData, setCardsData] = useState({
-    '_id': 1,
-    'game_rounds': 1,
-    'game_matchs': 1,
-    'recording': [
-      ['Back', 'Back', 'Back', 'Back', 'Back'], ['Back', 'Back', 'Back', 'Back', 'Back'],
-      ['Back', 'Back', 'Back', 'Back', 'Back'], ['Back', 'Back', 'Back', 'Back', 'Back'],
-      ['Back', 'Back', 'Back', 'Back', 'Back'], ['Back', 'Back', 'Back', 'Back', 'Back'],
-      ['Back', 'Back', 'Back', 'Back', 'Back'], ['Back', 'Back', 'Back', 'Back', 'Back'],
-      ['Back', 'Back', 'Back', 'Back', 'Back'], ['Back', 'Back', 'Back', 'Back', 'Back'],
-      ['Back', 'Back', 'Back', 'Back', 'Back'], ['Back', 'Back', 'Back', 'Back', 'Back'],
-      ['Back', 'Back', 'Back', 'Back', 'Back'],['Back', 'Back', 'Back', 'Back', 'Back']],
-    'first_play': 'South',
-    'trump': "0"
-  });
+  const [cardsData, setCardsData] = useState([]);
+  //const [card,setCard] = useState([]);
   const [round, setRound] = useState(0);
 
   useEffect(() => {
-    getAllCard();
+    getAllCard().then(res=>{
+      if(res.status == '200'){
+        console.log("[ Get status : 200 OK ! ]");
+        setCardsData(res.data)
+      }
+    });
+    
   }, []);
 
   const getAllCard = async () => {
-    await axios.get('http://localhost:4000/cards').then((res) => {
-      if (res.status === 200) {
-        console.log("GET STATUS : " + res.status + " OK.");
-        const allCard = res.data[0];
-        setCardsData(allCard)
-      }
-    });
+    const rawCard =  await axios.get('http://localhost:5000/card/');
+    return rawCard;
   }
 
   function onChangeRound(round) {
@@ -42,8 +30,10 @@ export default function Playing() {
 
   return (
     <>
-      <SelectRound onChangeRound={onChangeRound} />
-      <Fieldcard round={round} cardsData={cardsData} />
+    {)}
+    {cardsData.map(card=> <h1>{card._id} {card.record_card}</h1>)}
+    {/* <SelectRound onChangeRound={onChangeRound} />
+      <Fieldcard round={round} cardsData={cardsData} />*/}
     </>
   );
 }

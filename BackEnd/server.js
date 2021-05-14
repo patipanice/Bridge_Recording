@@ -128,11 +128,11 @@ const readCardMongo = (res) => {
             var dbo = db.db("ContractBridgeDB");
             dbo.collection("card").find({}).toArray((err,docs) => {
                 if (err) throw(err);
+                //const obj = Object.assign({}, docs);
                 res.json(docs)
                 console.log("Read card form mongo");
                 db.close();
-            });
-            
+            });    
         }
     });
     });
