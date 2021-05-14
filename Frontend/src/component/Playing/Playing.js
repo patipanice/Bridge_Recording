@@ -6,7 +6,6 @@ import SelectRound from './SelectRound'
 export default function Playing() {
 
   const [cardsData, setCardsData] = useState([]);
-  //const [card,setCard] = useState([]);
   const [round, setRound] = useState(0);
 
   useEffect(() => {
