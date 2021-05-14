@@ -1,5 +1,4 @@
 var express = require("express");
-var MongoClient = require('mongodb').MongoClient;
 var saveCards = require("./saveDataToMango");
 var cors = require("cors");
 const bodyParser = require("body-parser");
@@ -8,7 +7,8 @@ const resultRound = require('./resultRound');
 const Promise = require('promise')
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/ContractBridgeDB";
- 
+var {getStatus,updateStatus} = require('./connectMongo') 
+
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,51 +22,30 @@ var gameStatus = {
     game_round: 1,
     trump: "None",
     first_direction: "South"
-}
+} 
+
+getStatus.then(res=>{
+    gameStatus = {
+        game_match: res.game_match,
+        game_round: res.game_round,
+        trump: res.trump,
+        first_direction: res.first_direction
+    }
+    if(gameStatus.game_round === 13) {
+        let myqueryStatus = { '_id': gameStatus.game_match };
+        let newvaluesStatus = { $set: { 'game_match': gameStatus.game_match + 1} };
+        updateStatus(myqueryStatus,newvaluesStatus).then(console.log("success")).catch(err=> console.log(err));
+    }
+})
 
 app.listen(port, () => {
     console.log("[success] : listening on port " + port);
-    function connectMongoDB() {
-        return new Promise(function (fulfill, reject) {
-            MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
-                if (err) reject(err);
-                else {
-                    console.log("Database connected")
-                    var dbo = db.db("ContractBridgeDB");
-                    dbo.collection("status").findOne({}, (err, result) => {
-                        if (err) reject(err);
-                        else {
-                            fulfill(result);
-                        }
-                    });
-                }
-            });
-        });
-    }
-    connectMongoDB().then(res => {
-        gameStatus = {
-            game_match: res.game_match,
-            game_round: res.game_round,
-            trump: res.trump,
-            first_direction: res.first_direction
-        }
-        //when game_round = 13 -> game_match =+ 1 
-        if(gameStatus.game_round === 13) {
-            let myqueryStatus = { '_id': gameStatus.game_match };
-            let newvaluesStatus = { $set: { 'game_match': gameStatus.game_match + 1} };
-            dbo.collection("status").updateOne( myqueryStatus, newvaluesStatus, (err) => {
-                if (err) throw err;
-                console.log("Update game_match completed");
-                db.close();
-            });
-        }
-    });
 });
 
 app.get("/", (req, res) => {
     res.status(200).send("หน้าแรกของ api express");
 });
-//dsds
+
 //get data form arduino 
 app.get('/write/:data', (req, res) => {
     data = req.params.data;
@@ -159,4 +138,4 @@ const readStatusMongo = (res) => {
         }
     });
     });
-}
+} 
