@@ -66,7 +66,7 @@ app.listen(port, () => {
 app.get("/", (req, res) => {
     res.status(200).send("หน้าแรกของ api express");
 });
-//get data form arduino get
+//get data form arduino 
 app.get('/write/:data', (req, res) => {
     data = req.params.data;
     console.log("No. " + (arrData.length + 1) + " : " + data);
