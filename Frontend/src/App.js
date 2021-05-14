@@ -1,14 +1,13 @@
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import React from 'react';
-import Home from './component/Home'
-import Playing from './component/Playing/Playing'
-import Recording from './component/Recording/Recording'
-import AboutMe from './component/AboutMe'
-import Navbar from './component/Navbar'
-
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React from "react";
+import Home from "./component/Home";
+import Playing from "./component/Playing/Playing";
+import Recording from "./component/Recording/Recording";
+import AboutMe from "./component/AboutMe";
+import Navbar from "./component/Navbar";
+import History from "./component/History/History";
 
 function App() {
-
   return (
     <Router>
       <div>
@@ -16,11 +15,11 @@ function App() {
           <Route path="/aboutme">
             <AboutMe />
           </Route>
-          <Route path="/recording">
-            <Recording />
+          <Route path="/history">
+            <History />
           </Route>
           <Route path="/playing">
-            <Playing/>
+            <Playing />
           </Route>
           <Route path="/">
             <Home />

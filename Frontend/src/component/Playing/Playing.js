@@ -5,7 +5,7 @@ import SelectRound from "./SelectRound";
 import SelectMatch from "./SelectMatch";
 
 export default function Playing() {
-  const [cardsData, setCardsData] = useState(
+  const [cardsData, setCardsData] = useState([
     {
       _id: 1,
       record_card: [
@@ -25,45 +25,7 @@ export default function Playing() {
         ["Back", "Back", "Back", "Back", "Back"],
       ],
     },
-    {
-      _id: 2,
-      record_card: [
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-      ],
-    },
-    {
-      _id: 3,
-      record_card: [
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-        ["Back", "Back", "Back", "Back", "Back"],
-      ],
-    }
-  );
+  ]);
   const [status, setStatus] = useState(
     {
       _id: 1,
