@@ -30,7 +30,7 @@ export default function Playing() {
 
   return (
     <>
-    {)}
+    {}
     {cardsData.map(card=> <h1>{card._id} {card.record_card}</h1>)}
     {/* <SelectRound onChangeRound={onChangeRound} />
       <Fieldcard round={round} cardsData={cardsData} />*/}
