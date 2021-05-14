@@ -1,5 +1,6 @@
 # Contract Bridge Card Recording via RFID
 
+This is test message
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
