@@ -8,19 +8,12 @@ module.exports.saveCards = (arrData, winRound, firstDireciton, status) => {
         var dbo = db.db("contractBridge_DB");
 ContractBridgeDB
         let myquery = { "_id": status.game_match };
-        let newvalues = { $set: { [`record_card.${status.game_round}`]: [...arrData, winRound] } };
+        let newvalues = { $set: { [`record_card.${status.game_round}`]: [...arrData, `${winRound}_${firstDireciton}`] } };
         dbo.collection("card").updateOne(myquery, newvalues, (err) => {
             if (err) throw err;
             console.log("Update record_card completed");
         });
-      /* 
-        let myqueryTotal = { "_id": status.game_match };
-        let newvaluesTotal = { $set: { [`${firstDireciton}.${(status.game_round)-1}`]: winRound } };
-        dbo.collection("total_card").updateOne(myqueryTotal, newvaluesTotal, (err) => {
-            if (err) throw err;
-            console.log("Update total_card completed");
-        }); */
- 
+
         //update first_direction & game_round
         let myqueryStatus = { "_id": status.game_match };
         let newvaluesStatus = { $set: { 'game_round': (status.game_round)+ 1, 'first_direction': firstDireciton } };

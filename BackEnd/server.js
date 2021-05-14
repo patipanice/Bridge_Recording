@@ -42,6 +42,7 @@ app.listen(port, () => {
                 }
             });
         });
+        
     }
     connectMongoDB().then(res => {
         gameStatus = {
