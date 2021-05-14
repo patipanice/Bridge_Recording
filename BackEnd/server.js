@@ -62,7 +62,7 @@ app.listen(port, () => {
         }
     });
 });
-//test
+
 app.get("/", (req, res) => {
     res.status(200).send("หน้าแรกของ api express");
 });
