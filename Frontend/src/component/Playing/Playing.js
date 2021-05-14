@@ -6,7 +6,6 @@ import SelectRound from './SelectRound'
 export default function Playing() {
 
   const [cardsData, setCardsData] = useState([]);
-  //const [card,setCard] = useState([]);
   const [round, setRound] = useState(0);
 
   useEffect(() => {
@@ -30,7 +29,7 @@ export default function Playing() {
 
   return (
     <>
-    {)}
+    {}
     {cardsData.map(card=> <h1>{card._id} {card.record_card}</h1>)}
     {/* <SelectRound onChangeRound={onChangeRound} />
       <Fieldcard round={round} cardsData={cardsData} />*/}
