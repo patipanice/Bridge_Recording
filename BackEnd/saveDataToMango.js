@@ -6,7 +6,6 @@ module.exports.saveCards = (arrData, winRound, firstDireciton, status) => {
         if (err) throw (err);
         console.log("Database connected!");
         var dbo = db.db("contractBridge_DB");
-ContractBridgeDB
         let myquery = { "_id": status.game_match };
         let newvalues = { $set: { [`record_card.${status.game_round}`]: [...arrData, `${winRound}_${firstDireciton}`] } };
         dbo.collection("card").updateOne(myquery, newvalues, (err) => {
