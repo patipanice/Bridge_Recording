@@ -13,7 +13,7 @@ const connectMongo = MongoClient.connect(URL, {
 const getStatus = () => 
   connectMongo.then((db) => {
     let dbo = db.db("ContractBridgeDB");
-    return dbo.collection(STATUS).findOne({});
+    return dbo.collection(STATUS).find({});
   });
 
 

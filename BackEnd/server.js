@@ -140,7 +140,10 @@ async function readCard(res) {
 //read status
 async function readStatus(res) {
    await getStatus().then(response=>{ 
-      res.json(response);
+     response.toArray((err,docs)=>{
+       if(err) throw(err)
+       res.json(docs);
       console.log("Read status passed");
+     })    
   });
 }
