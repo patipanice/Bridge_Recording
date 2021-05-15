@@ -2,9 +2,14 @@ var express = require("express");
 var cors = require("cors");
 const bodyParser = require("body-parser");
 const editarrData = require("./editarrData");
-const {resultRound} = require("./resultRound");
-var { getStatus, updateStatus, insertCard, getCard } = require("./connectMongo");
-var {createFile} = require('./logFile')
+const { resultRound } = require("./resultRound");
+var {
+  getStatus,
+  updateStatus,
+  insertCard,
+  getCard,
+} = require("./connectMongo");
+
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,7 +24,6 @@ var gameStatus = {
   first_direction: "South",
 };
 
-createFile();
 //Get status form Mongo
 const getStatusHandler = () => {
   getStatus().then((res) => {
@@ -78,9 +82,9 @@ app.get("/write/:data", (req, res) => {
             `${winRound}_${first_direciton}`,
           ],
         },
-      }; 
+      };
       insertCard(gameStatus, arrData, myquery, newvalues)
-        .then((res,err) => {
+        .then((res, err) => {
           if (err) throw err;
           console.log("Update record_card completed");
         })
@@ -93,7 +97,7 @@ app.get("/write/:data", (req, res) => {
               first_direction: first_direciton,
             },
           };
-          updateStatus(myqueryStatus, newvaluesStatus).then((res,err) => {
+          updateStatus(myqueryStatus, newvaluesStatus).then((res, err) => {
             if (err) throw err;
             console.log("ีีUpdate status completed");
             arrData = []; //reset
@@ -109,12 +113,12 @@ app.post("/poststatus", (req, res) => {
   let trump = req.body.trump;
   let first_direction = req.body.first_direction;
   let mySQL = { _id: gameStatus.game_match };
-  let newSQL = { $set: { trump: trump, first_direction: first_direction },};
-  updateStatus(mySQL,newSQL).then(err=>{
-      if(err) throw(err)
-      arrData = []
-      console.log("Update status complete");
-  })
+  let newSQL = { $set: { trump: trump, first_direction: first_direction } };
+  updateStatus(mySQL, newSQL).then((err) => {
+    if (err) throw err;
+    arrData = [];
+    console.log("Update status complete");
+  });
 });
 //get card api
 app.get("/card", (req, res) => {
@@ -126,24 +130,24 @@ app.get("/status", (req, res) => {
   readStatus(res);
 });
 
-//read card 
+//read card
 async function readCard(res) {
-  await getCard().then(response=>{
-    response.toArray((err,docs)=>{
-        if(err) throw(err)
-            res.json(docs);
-            console.log("Read card passed");
-        });
+  await getCard().then((response) => {
+    response.toArray((err, docs) => {
+      if (err) throw err;
+      res.json(docs);
+      console.log("Read card passed");
+    });
   });
 }
 
 //read status
 async function readStatus(res) {
-   await getStatus().then(response=>{ 
-     response.toArray((err,docs)=>{
-       if(err) throw(err)
-       res.json(docs);
+  await getStatus().then((response) => {
+    response.toArray((err, docs) => {
+      if (err) throw err;
+      res.json(docs);
       console.log("Read status passed");
-     })    
+    });
   });
 }
