@@ -26,7 +26,7 @@ const editArrData = (arrData, first_direction) => {
         newarrData[2] = arrData[1];
         newarrData[3] = arrData[2];
     }
-    console.log("Edit_Data : " + newarrData);
+    console.log("[Edit_Data] : " + newarrData);
     return newarrData;
 }
 
