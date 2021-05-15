@@ -31,6 +31,10 @@ const updateStatus = (query, newquery) =>
     return dbo.collection(STATUS).updateOne(query, newquery);
   });
 
+  const createStatus = () => {
+    
+  }
+
 const insertCard = (status,arrData,myquery,newvalues) =>
   connectMongo.then((db) => {
     let dbo = db.db("ContractBridgeDB");
