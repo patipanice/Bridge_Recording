@@ -17,22 +17,22 @@ app.use(cors());
 var port = process.env.PORT || 5000;
 
 var arrData = []; //recive 4 cards form arduino
+//init status
 var gameStatus = {
   game_match: 1,
   game_round: 1,
   trump: "None",
   first_direction: "South",
-  date_time: "2021-05-15T17:04:35.680+00:00",
+  start_date_time: "2021-05-15T17:04:35.680+00:00",
+  end_date_time: "2021-05-15T17:04:35.680+00:00"
 };
-
-//createFile();
 
 
   //let today = new Date();
   //console.log(today.toString());
  // console.log(today.toLocaleString());
 
-//Get status form Mongo
+//Get last status form last game_match form Mongo
 const getStatusHandler = () => {
   getStatus().then((res) => {
     res
@@ -44,7 +44,8 @@ const getStatusHandler = () => {
           game_round: docs[0].game_round,
           trump: docs[0].trump,
           first_direction: docs[0].first_direction,
-          date_time: docs[0].date_time,
+          start_date_time: docs[0].start_date_time,
+          end_date_time: docs[0].end_date_time,
         };
         if (gameStatus.game_round === 13) {
           let myqueryStatus = { _id: gameStatus.game_match };
