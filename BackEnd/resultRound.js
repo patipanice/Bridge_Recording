@@ -1,7 +1,7 @@
 //********************************************* คำนวนไพ่ และ ชนะรอบ ***************************************//
 
 const resultRound = (arrData) => {
-    console.log("Resulting round state...................");
+    console.log(".................... Resulting round state ....................");
     let firstChar = arrData[0].charAt(0);
     let maxValue = 0;
     let winRound = 'null';
@@ -52,4 +52,4 @@ const changeDirection = (num) => {
     }
 }
 
-module.exports = resultRound, findMax;
+module.exports = {resultRound};
