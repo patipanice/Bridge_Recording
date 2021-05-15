@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const editarrData = require("./editarrData");
 const {resultRound} = require("./resultRound");
 var { getStatus, updateStatus, insertCard, getCard } = require("./connectMongo");
-
+var {createFile} = require('./logFile')
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,6 +19,7 @@ var gameStatus = {
   first_direction: "South",
 };
 
+createFile();
 //Get status form Mongo
 const getStatusHandler = () => {
   getStatus().then((res) => {
@@ -62,7 +63,7 @@ app.get("/write/:data", (req, res) => {
     console.log("You placing " + data);
     arrData.push(data);
     if (arrData.length === 4) {
-      console.log("[Card_Data]= " + arrData);
+      console.log("[Card_Data] : " + arrData);
       arrData = editarrData(arrData, gameStatus.first_direction);
       let [winRound, first_direciton] = resultRound(arrData);
       console.log(
@@ -95,6 +96,8 @@ app.get("/write/:data", (req, res) => {
           updateStatus(myqueryStatus, newvaluesStatus).then((res,err) => {
             if (err) throw err;
             console.log("ีีUpdate status completed");
+            arrData = []; //reset
+            getStatusHandler();
           });
         });
     }
@@ -109,6 +112,7 @@ app.post("/poststatus", (req, res) => {
   let newSQL = { $set: { trump: trump, first_direction: first_direction },};
   updateStatus(mySQL,newSQL).then(err=>{
       if(err) throw(err)
+      arrData = []
       console.log("Update status complete");
   })
 });
