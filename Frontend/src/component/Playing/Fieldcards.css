@@ -71,7 +71,7 @@ label {
 
 .direction {
   position: absolute;
-  color: rgb(202, 202, 202);
+  color: rgb(7, 0, 0);
 }
 .south-direction {
   top: 60%;
@@ -79,18 +79,18 @@ label {
 }
 
 .east-direction {
-  top: 220px;
-  left: 860px;
+  top: 35%;
+  left: 72%;
 }
 
 .north-direction {
-  top: 25px;
-  left: 645px;
+  top: 6%;
+  left: 50%;
 }
 
 .west-direction {
-  top: 220px;
-  left: 435px;
+  top: 35%;
+  left: 32%;
 }
 
 .win-direction {
