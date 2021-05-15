@@ -101,7 +101,7 @@ export default function Fieldcard(props) {
             src={cardJson[status["trump"].charAt(0)]}
             alt="trump"
             className="trump-img"
-          />{" "}
+          />
           / {status["trump"].charAt(1)}
         </h1>
       )}

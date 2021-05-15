@@ -85,11 +85,9 @@ export default function Playing() {
 
   return (
     <>
-      <div className="grid-content-3-col">
-        <SelectRound onChangeRound={onChangeRound} />
-        <SelectMatch onChangeMatch={onChangeMatch} />
-        <Fieldcard status={status} cardsData={cardsData} round={round} />
-      </div>
+      <SelectRound onChangeRound={onChangeRound} />
+      <SelectMatch onChangeMatch={onChangeMatch} />
+      <Fieldcard status={status} cardsData={cardsData} round={round} />
     </>
   );
 }
