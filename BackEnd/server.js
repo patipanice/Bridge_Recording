@@ -158,13 +158,10 @@ app.get("/write/:data", (req, res) => {
 //post status form front
 app.post("/poststatus", (req, res) => {
   let trump = req.body.trump;
-  let first_Direction = req.body.first_direction;
+  let first_direction = req.body.first_direction;
   let mySQL = { _id: gameStatus.game_match };
-  let newSQL = { $set: { trump: trump, first_direction: first_Direction } };
-  updateStatus(mySQL, newSQL).then((err) => {
-    if (err) throw err;
-    console.log("Update status complete");
-  });
+  let newSQL = { $set: { trump: trump, first_direction: first_direction } };
+  updateStatus(mySQL, newSQL).then(console.log("Update status complete")).catch(err=>console.log(err));
 });
 //get card api
 app.get("/card", (req, res) => {
