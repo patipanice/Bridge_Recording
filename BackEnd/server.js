@@ -8,14 +8,14 @@ var {
   updateStatus,
   insertCard,
   getCard,
+  createStatus
 } = require("./connectMongo");
-var { createFile } = require("./logFile");
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 var port = process.env.PORT || 5000;
-
+ 
 var arrData = []; //recive 4 cards form arduino
 //init status
 var gameStatus = {
@@ -47,13 +47,20 @@ const getStatusHandler = () => {
           start_date_time: docs[0].start_date_time,
           end_date_time: docs[0].end_date_time,
         };
+        console.log(gameStatus);
         if (gameStatus.game_round === 13) {
-          let myqueryStatus = { _id: gameStatus.game_match };
-          let newvaluesStatus = {
-            $set: { game_match: gameStatus.game_match + 1 },
-          };
-          updateStatus(myqueryStatus, newvaluesStatus)
-            .then(console.log("Update status success"))
+          //start new game match reset status to init and game_match += 1
+          let myqueryStatus = { 
+            _id: gameStatus.game_match , 
+            game_match: 2,
+            game_round: 1,
+            trump: "None",
+            first_direction: docs[0].first_direction,
+            start_date_time: gameStatus.end_date_time,
+            end_date_time: gameStatus.end_date_time
+           };
+          createStatus(myqueryStatus)
+            .then(console.log("Create new status match success"))
             .catch((err) => console.log(err));
         }
       });
@@ -84,23 +91,15 @@ app.get("/write/:data", (req, res) => {
     console.log("You placing " + data);
     arrData.push(data);
     if (arrData.length === 4) {
-      console.log("[Card_Data] : " + arrData);
+      console.log(`[Card_Data] :  ${arrData}`);
       console.log(gameStatus.first_direction);
       arrData = editarrData(arrData, gameStatus.first_direction);
       let [winRound, first_direciton] = resultRound(arrData);
-      console.log(
-        "WinRound : " + winRound + " First_Direction : " + first_direciton
-      );
+      console.log(`WinRound : ${winRound}  First_Direction :  ${first_direciton}`);
+      //insert card to db
       let myquery = { _id: gameStatus.game_match };
-      let newvalues = {
-        $set: {
-          [`record_card.${gameStatus.game_round}`]: [
-            ...arrData,
-            `${winRound}_${first_direciton}`,
-          ],
-        },
-      };
-      insertCard(gameStatus, arrData, myquery, newvalues)
+      let newvalues = {$push: {'record_card': [...arrData,`${winRound}_${first_direciton}`]}};
+      insertCard(myquery, newvalues)
         .then((res, err) => {
           if (err) throw err;
           console.log("Update record_card completed");
@@ -113,11 +112,11 @@ app.get("/write/:data", (req, res) => {
             $set: {
               game_round: gameStatus.game_round + 1,
               first_direction: first_direciton,
-              start_date_time: date,
+              start_date_time: date, 
             } 
           };
-          if(gameStatus.game_round === 12) {
-            console.log("inside")
+          if(gameStatus.game_round === 13) {
+            console.log("Round = 13")
              newvaluesStatus = {
               $set: {
                 game_round: gameStatus.game_round + 1,
@@ -132,6 +131,7 @@ app.get("/write/:data", (req, res) => {
             arrData = []; //reset
             getStatusHandler(); 
           });
+
         });
     }
   } 

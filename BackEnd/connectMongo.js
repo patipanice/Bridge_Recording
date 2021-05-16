@@ -10,20 +10,17 @@ const connectMongo = MongoClient.connect(URL, {
   useUnifiedTopology: true,
 });
 
-const getStatus = () => 
+const getStatus = () =>
   connectMongo.then((db) => {
     let dbo = db.db("ContractBridgeDB");
     return dbo.collection(STATUS).find({});
   });
 
-
-const getCard = () => 
-  connectMongo.then(db =>{
+const getCard = () =>
+  connectMongo.then((db) => {
     let dbo = db.db("ContractBridgeDB");
     return dbo.collection(CARD).find({});
   });
-
-
 
 const updateStatus = (query, newquery) =>
   connectMongo.then((db) => {
@@ -31,19 +28,30 @@ const updateStatus = (query, newquery) =>
     return dbo.collection(STATUS).updateOne(query, newquery);
   });
 
-  const createStatus = () => {
-    
-  }
+const createStatus = (query) => 
+  connectMongo.then(db=>{
+    let dbo = db.db("ContractBridgeDB");
+    return dbo.collection(STATUS).insertOne(query);
+  });
 
-const insertCard = (status,arrData,myquery,newvalues) =>
+
+/*const insertCard = (myquery, newvalues) =>
+  connectMongo.then((db) => {
+    let dbo = db.db("ContractBridgeDB");
+    return dbo.collection("card").updateOne(myquery, newvalues);
+  });*/
+
+  const insertCard = (myquery, newvalues) =>
   connectMongo.then((db) => {
     let dbo = db.db("ContractBridgeDB");
     return dbo.collection("card").updateOne(myquery, newvalues);
   });
 
+
 module.exports = {
   getStatus,
   updateStatus,
   insertCard,
-  getCard
+  getCard,
+  createStatus
 };

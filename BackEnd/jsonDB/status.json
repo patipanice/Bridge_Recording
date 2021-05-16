@@ -1,8 +1,8 @@
 [{
   "_id": 1,
-  "game_match": 2,
-  "trump": "H1",
-  "game_round": 13,
+  "game_match": 1,
+  "trump": "None",
+  "game_round": 1,
   "first_direction": "South",
   "end_date_time": {
     "$date": "2021-05-15T17:34:46.583Z"
