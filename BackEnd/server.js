@@ -84,7 +84,7 @@ app.get("/", (req, res) => {
   res.status(200).send("first page of api express");
 });
 
-//get data form arduino
+//get data form arduino server
 app.get("/write/:data", (req, res) => {
   data = req.params.data;
   if (gameStatus.trump === "None") {
