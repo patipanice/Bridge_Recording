@@ -1,4 +1,4 @@
-[{
+{
   "_id": 1,
   "game_match": 1,
   "trump": "None",
@@ -10,4 +10,4 @@
   "start_date_time": {
     "$date": "2021-05-15T17:21:00.167Z"
   }
-}]
+}

@@ -8,7 +8,8 @@ var {
   updateStatus,
   insertCard,
   getCard,
-  createStatus
+  createStatus,
+  resetMongoInit
 } = require("./connectMongo");
 var app = express();
 app.use(bodyParser.json());
@@ -16,6 +17,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 var port = process.env.PORT || 5000;
  
+
+
+
+
 var arrData = []; //recive 4 cards form arduino
 //init status
 var gameStatus = {
@@ -69,6 +74,7 @@ const getStatusHandler = () => {
 
 app.listen(port, () => {
   console.log("[success] : listening on port " + port);
+  //resetMongoInit();
   getStatusHandler();
 });
 
@@ -127,7 +133,7 @@ app.get("/write/:data", (req, res) => {
           } 
           updateStatus(myqueryStatus, newvaluesStatus).then((res, err) => {
             if (err) throw err;
-            console.log("ีีUpdate status completed");
+            console.log("Update status completed");
             arrData = []; //reset
             getStatusHandler(); 
           });
@@ -153,7 +159,7 @@ app.post("/poststatus", (req, res) => {
 app.get("/card", (req, res) => {
   readCard(res);
 });
-
+ 
 //get status api
 app.get("/status", (req, res) => {
   readStatus(res);
@@ -180,3 +186,4 @@ async function readStatus(res) {
     });
   });
 }
+ 

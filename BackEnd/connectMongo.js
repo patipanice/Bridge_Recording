@@ -1,8 +1,10 @@
 var MongoClient = require("mongodb").MongoClient;
-
+//var cardJson = require("./jsonDB/card.json");
+//var statusJson =require("./jsonDB/status.json");
 const URL = "mongodb://localhost:27017/ContractBridgeDB";
 const STATUS = "status";
 const CARD = "card";
+
 
 //Connect MongoDB
 const connectMongo = MongoClient.connect(URL, {
@@ -44,8 +46,19 @@ const createStatus = (query) =>
   const insertCard = (myquery, newvalues) =>
   connectMongo.then((db) => {
     let dbo = db.db("ContractBridgeDB");
-    return dbo.collection("card").updateOne(myquery, newvalues);
+    return dbo.collection(CARD).updateOne(myquery, newvalues);
   });
+
+
+  const resetMongoInit = async (_id) =>{
+   await connectMongo.then((db) => {
+      let dbo = db.db("ContractBridgeDB");
+      dbo.collection(STATUS).deleteOne({'_id':_id},(err)=>{
+        if(err) throw(err)
+        console.log(`Delete ${_id} document completed`)
+      });
+    });
+  }
 
 
 module.exports = {
@@ -53,5 +66,6 @@ module.exports = {
   updateStatus,
   insertCard,
   getCard,
-  createStatus
+  createStatus,
+  resetMongoInit
 };
