@@ -63,11 +63,6 @@ export default function Playing() {
       if (res.status == "200") {
         console.log("[ Get status server : 200 OK ! ]");
         setStatus(res.data[match]); //when match change useEffect() will run again and again
-        let date = new Date(res.data[0].end_date_time);
-        let today = date.toLocaleString();
-        let time = today.substr(11);
-        let day = today.substr(0, 9);
-        // console.log(day);
       }
     });
   }, [match]);
@@ -92,7 +87,7 @@ export default function Playing() {
     <>
       <SelectRound onChangeRound={onChangeRound} />
       <SelectMatch onChangeMatch={onChangeMatch} />
-      <Fieldcard status={status} cardsData={cardsData} round={round} />
+      {<Fieldcard status={status} cardsData={cardsData} round={round} />}
     </>
   );
 }
