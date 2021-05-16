@@ -24,8 +24,8 @@ const getCard = () =>
     return dbo.collection(CARD).find({});
   });
 
-const updateStatus = (query, newquery) =>
-  connectMongo.then((db) => {
+const updateStatus = async (query, newquery) =>
+ await connectMongo.then((db) => {
     let dbo = db.db("ContractBridgeDB");
     return dbo.collection(STATUS).updateOne(query, newquery);
   });
@@ -36,18 +36,24 @@ const createStatus = (query) =>
     return dbo.collection(STATUS).insertOne(query);
   });
 
-
+  const createCard = (query) =>
+  connectMongo.then((db) => { 
+    let dbo = db.db("ContractBridgeDB");
+    return dbo.collection(CARD).insertOne(query);
+  });
 /*const insertCard = (myquery, newvalues) =>
   connectMongo.then((db) => {
     let dbo = db.db("ContractBridgeDB");
     return dbo.collection("card").updateOne(myquery, newvalues);
   });*/
 
-  const insertCard = (myquery, newvalues) =>
-  connectMongo.then((db) => {
+  const insertCard = (myquery,newquery) =>
+  connectMongo.then((db) => { 
     let dbo = db.db("ContractBridgeDB");
-    return dbo.collection(CARD).updateOne(myquery, newvalues);
+    return dbo.collection(CARD).updateOne(myquery,newquery);
   });
+
+
 
 
   const resetMongoInit = async (_id) =>{
@@ -67,5 +73,6 @@ module.exports = {
   insertCard,
   getCard,
   createStatus,
-  resetMongoInit
+  resetMongoInit,
+  createCard
 };
