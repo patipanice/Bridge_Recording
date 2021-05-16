@@ -9,11 +9,8 @@ var {
   insertCard,
   getCard,
 } = require("./connectMongo");
-<<<<<<< HEAD
 
-=======
 var { createFile } = require("./logFile");
->>>>>>> 59b62673b72c2c2fd56999581d35ba1250be970d
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,19 +25,17 @@ var gameStatus = {
   trump: "None",
   first_direction: "South",
   start_date_time: "2021-05-15T17:04:35.680+00:00",
-  end_date_time: "2021-05-15T17:04:35.680+00:00"
+  end_date_time: "2021-05-15T17:04:35.680+00:00",
 };
 
-<<<<<<< HEAD
 //Get status form Mongo
-=======
 
-  //let today = new Date();
-  //console.log(today.toString());
- // console.log(today.toLocaleString());
+//let today = new Date();
+//console.log(today.toString());
+// console.log(today.toLocaleString());
 
 //Get last status form last game_match form Mongo
->>>>>>> 59b62673b72c2c2fd56999581d35ba1250be970d
+
 const getStatusHandler = () => {
   getStatus().then((res) => {
     res
@@ -122,31 +117,30 @@ app.get("/write/:data", (req, res) => {
               game_round: gameStatus.game_round + 1,
               first_direction: first_direciton,
               start_date_time: date,
-            } 
+            },
           };
-<<<<<<< HEAD
-=======
-          if(gameStatus.game_round === 12) {
-            console.log("inside")
-             newvaluesStatus = {
+
+          if (gameStatus.game_round === 12) {
+            console.log("inside");
+            newvaluesStatus = {
               $set: {
                 game_round: gameStatus.game_round + 1,
                 first_direction: first_direciton,
                 end_date_time: date,
-              }
+              },
             };
-          } 
->>>>>>> 59b62673b72c2c2fd56999581d35ba1250be970d
+          }
+
           updateStatus(myqueryStatus, newvaluesStatus).then((res, err) => {
             if (err) throw err;
-            console.log("ีีUpdate status completed");
+            console.log("Update status completed");
             arrData = []; //reset
-            getStatusHandler(); 
+            getStatusHandler();
           });
         });
     }
-  } 
-}); 
+  }
+});
 
 //post status form front
 app.post("/poststatus", (req, res) => {
