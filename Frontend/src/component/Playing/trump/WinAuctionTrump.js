@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./WinAuctionTrump.css";
-import axios from "axios";
+import axios from 'axios';
 export default function Trump(props) {
   const { onTrumpClose } = props;
   const [input, setInput] = useState({
@@ -8,26 +8,24 @@ export default function Trump(props) {
     Trump: "",
   });
 
-  const onSubmit = (e) => {
-    if (input["Trump"].length === 0 || input["winTrump"].length === 0) {
+  const onSubmit = e => {
+    if (input['Trump'].length === 0 || input['winTrump'].length === 0) {
       alert("Plese select all option below to play the game !!");
     } else {
-      axios
-        .post("http://localhost:5000/poststatus", {
-          trump: input["Trump"],
-          first_direction: input["winTrump"],
-        })
-        .then((res) => {
-          console.log(res.status);
-          if (res.status == "200") {
-            alert("Set Play first and Trump complete !");
-            onTrumpClose();
-          }
-        });
+      axios.post('http://localhost:5000/poststatus', {
+        trump: input['Trump'], first_direction: input['winTrump']
+      }).then((res) => {
+        console.log(res.status);
+        if (res.status == "200") {
+          alert("Set Play first and Trump complete !");
+          onTrumpClose();
+        }
+      });
     }
-  };
 
-  const handleChange = (e) => {
+  }
+
+  const handleChange = e => {
     const { target } = e;
     const { name } = target;
     const value = target.value;
@@ -37,12 +35,11 @@ export default function Trump(props) {
     });
   };
 
-  console.log(input);
 
   return (
     <div className="content-trump">
-      <div className="content-trump-popup-bg">
-        <div className="content-trump-popup-use">
+      <div className="content-trump-popup-bg" >
+        <div className="content-trump-popup-use" >
           <form>
             <h1 className="headder-trump">Select Win Auction Trump</h1>
             <div className="first_play">
@@ -80,7 +77,7 @@ export default function Trump(props) {
             <div className="select_trump">
               <div className="radio">
                 1 &nbsp;
-                <label>
+              <label>
                   <input
                     type="radio"
                     value="C1"
@@ -88,7 +85,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconC.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -97,7 +94,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconD.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -106,7 +103,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconH.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -115,7 +112,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconS.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -123,13 +120,13 @@ export default function Trump(props) {
                     name="Trump"
                     onChange={handleChange}
                   />
-                  &nbsp; NT
-                </label>
+                &nbsp; NT
+              </label>
               </div>
               {/* ///////////////////////2//////////////////////////////////// */}
               <div className="radio">
                 2 &nbsp;
-                <label>
+              <label>
                   <input
                     type="radio"
                     value="C2"
@@ -137,7 +134,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconC.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -146,7 +143,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconD.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -155,7 +152,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconH.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -164,7 +161,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconS.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -172,12 +169,12 @@ export default function Trump(props) {
                     name="Trump"
                     onChange={handleChange}
                   />
-                  &nbsp; NT
-                </label>
+                &nbsp; NT
+              </label>
               </div>
               <div className="radio">
                 3 &nbsp;
-                <label>
+              <label>
                   <input
                     type="radio"
                     value="C3"
@@ -185,7 +182,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconC.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -194,7 +191,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconD.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -203,7 +200,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconH.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -212,7 +209,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconS.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -220,13 +217,13 @@ export default function Trump(props) {
                     name="Trump"
                     onChange={handleChange}
                   />
-                  &nbsp; NT
-                </label>
+                &nbsp; NT
+              </label>
               </div>
               {/* ///////////////////////4//////////////////////////////////// */}
               <div className="radio">
                 4 &nbsp;
-                <label>
+              <label>
                   <input
                     type="radio"
                     value="C4"
@@ -234,7 +231,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconC.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -243,7 +240,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconD.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -252,7 +249,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconH.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -261,7 +258,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconS.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -269,13 +266,13 @@ export default function Trump(props) {
                     name="Trump"
                     onChange={handleChange}
                   />
-                  &nbsp; NT
-                </label>
+                &nbsp; NT
+              </label>
               </div>
               {/* //////////////////////5//////////////////////////////// */}
               <div className="radio">
                 5 &nbsp;
-                <label>
+              <label>
                   <input
                     type="radio"
                     value="C5"
@@ -283,7 +280,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconC.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -292,7 +289,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconD.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -301,7 +298,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconH.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -310,7 +307,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconS.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -318,13 +315,13 @@ export default function Trump(props) {
                     name="Trump"
                     onChange={handleChange}
                   />
-                  &nbsp; NT
-                </label>
+                &nbsp; NT
+              </label>
               </div>
               {/* ///////////////////////6//////////////////////////////////// */}
               <div className="radio">
                 6 &nbsp;
-                <label>
+              <label>
                   <input
                     type="radio"
                     value="C6"
@@ -332,7 +329,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconC.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -341,7 +338,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconD.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -350,7 +347,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconH.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -359,7 +356,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconS.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -367,13 +364,13 @@ export default function Trump(props) {
                     name="Trump"
                     onChange={handleChange}
                   />
-                  &nbsp; NT
-                </label>
+                &nbsp; NT
+              </label>
               </div>
               {/* //////////////////////7//////////////////////////////// */}
               <div className="radio">
                 7 &nbsp;
-                <label>
+              <label>
                   <input
                     type="radio"
                     value="C7"
@@ -381,7 +378,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconC.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -390,7 +387,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconD.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -399,7 +396,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconH.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -408,7 +405,7 @@ export default function Trump(props) {
                     onChange={handleChange}
                   />
                   <img src="/images/IconS.png" /> &nbsp;
-                </label>
+              </label>
                 <label>
                   <input
                     type="radio"
@@ -416,14 +413,16 @@ export default function Trump(props) {
                     name="Trump"
                     onChange={handleChange}
                   />
-                  &nbsp; NT
-                </label>
+                &nbsp; NT
+              </label>
               </div>
             </div>
             <button type="submit" onClick={onSubmit}>
               Submit
             </button>
-            <button onClick={onTrumpClose}>Cancle</button>
+            <button onClick={onTrumpClose}>
+              Cancle
+            </button>
           </form>
         </div>
       </div>
