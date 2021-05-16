@@ -9,7 +9,6 @@ var {
   insertCard,
   getCard,
   createStatus,
-  resetMongoInit,
   createCard
 } = require("./connectMongo");
 var app = express();
@@ -18,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 var port = process.env.PORT || 5000;
 
-var arrData = []; //recive 4 cards form arduino asdadadad
+var arrData = []; //recive 4 cards form arduino 
 //init status
 var gameStatus = {
   game_match: 1,
